@@ -96,7 +96,7 @@ class SignUp extends Component {
                         <input type="text" id="surname" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="date_of_birth">Date of birth</label>
+                        <label htmlFor="date_of_birth">Date of birth YYYY-MM-DD</label>
                         <input type="text" id="date_of_birth" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
