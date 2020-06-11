@@ -9,6 +9,8 @@ import store from './store';
 import { Provider } from 'react-redux';
 import { loadUser } from './store/actions/authActions';
 import Dashboard from './components/dashboard/Dashboard';
+import Homepage from './components/homepage/Homepage';
+import Upload from './components/upload/Upload';
 
 class App extends Component {
 
@@ -23,10 +25,11 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Switch>
-              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/" component={Homepage} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              {/* <Route path="/logout" component={Logout} /> */}
+              <Route exact path="/upload" component={Upload} />
+              <Route exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
         </BrowserRouter>

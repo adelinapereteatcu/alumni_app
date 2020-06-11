@@ -31,7 +31,7 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 //register user
-export const register = ({ name, surname, date_of_birth, email, password, gender}) => dispatch =>{
+export const register = ({ cnp, first_name, last_name, graduation_year}) => dispatch =>{
     //headers
     const config = {
         headers :{
@@ -39,7 +39,8 @@ export const register = ({ name, surname, date_of_birth, email, password, gender
         }
     }
     //request body
-    const body = JSON.stringify({ name, surname, date_of_birth, email, password, gender});
+    //we are taking a javaScript object and we want to turn it into JSON
+    const body = JSON.stringify({ cnp, first_name, last_name, graduation_year});
 
     axios.post('/register', body, config)
     .then(res => dispatch({
@@ -47,6 +48,7 @@ export const register = ({ name, surname, date_of_birth, email, password, gender
         payload:res.data
     }))
     .catch(err => {
+        //errorsAction
         dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
         dispatch({
             type: REGISTER_FAIL

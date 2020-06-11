@@ -19,7 +19,8 @@ route.post('/student/add', function (req, res) {
     console.log(email);
 
     session
-    .run("CREATE (n:Student {name:{nameParam}, surname:{surnameParam}, date_of_birth:date({date_of_birthParam}), gender:{genderParam}, email:{emailParam}}) RETURN n", { nameParam: name, surnameParam: surname, date_of_birthParam: date_of_birth, genderParam: gender, emailParam:email })
+    .run("CREATE (n:Student {name:{nameParam}, surname:{surnameParam}, date_of_birth:date({date_of_birthParam}), gender:{genderParam}, email:{emailParam}}) RETURN n", 
+    { nameParam: name, surnameParam: surname, date_of_birthParam: date_of_birth, genderParam: gender, emailParam:email })
     .then(function (result) {
         //res.redirect('/');
         //res.send(result);

@@ -3,18 +3,47 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { register } from '../../store/actions/authActions';
 import { clearErrors } from '../../store/actions/errorActions';
-import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Button from "@material-ui/core/Button";
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = theme => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    }
+});
+
 
 class SignUp extends Component {
-    state = {
-        name: '',
-        surname: '',
-        date_of_birth: '',
-        email: '',
-        password: '',
-        gender: '',
-        msg: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            cnp: '',
+            first_name: '',
+            last_name: '',
+            email: '',
+            graduation_year: '',
+            msg: null
+        }
     }
 
     static propTypes = {
@@ -26,6 +55,7 @@ class SignUp extends Component {
 
     componentDidUpdate(prevProps) {
         const { error } = this.props;
+        //if the error has changed
         if (error !== prevProps.error) {
             //check for register error
             if (error.id === 'REGISTER_FAIL') {
@@ -34,7 +64,6 @@ class SignUp extends Component {
                 this.setState({ msg: null });
             }
         }
-        M.AutoInit();
     }
 
     handleChange = (e) => {
@@ -42,24 +71,23 @@ class SignUp extends Component {
             ...this.state,
             [e.target.id]: e.target.value
         })
-        console.log("handleChange " + [e.target.id] +" "+ e.target.value);
+        console.log("handleChange " + [e.target.id] + " " + e.target.value);
         //this.props.clearErrors();
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { name, surname, date_of_birth, email, password, gender } = this.state;
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const { cnp, first_name, last_name, email, graduation_year } = this.state;
         const newUser = {
-            name,
-            surname,
-            date_of_birth,
-            email,
-            password,
-            gender
+            cnp,
+            first_name,
+            last_name,
+            //email,
+            graduation_year
         }
         //attempt to register
         this.props.register(newUser);
-        //this.props.clearErrors();
+        this.props.clearErrors();
         // console.log("Name : " + this.state.name);
         // console.log("Surname : " + this.state.surname);
         // console.log("Date of birth : " + this.state.date_of_birth);
@@ -67,69 +95,173 @@ class SignUp extends Component {
         // console.log("Password : " + this.state.password);
         // console.log("Gender : " + this.state.gender);
         console.log(this.state);
-        this.props.history.push("/");
+        // if (this.props.isAuthenticated)
+        //     this.props.history.push("/");
     }
 
     componentDidMount() {
         console.log("component did mount");
-        M.AutoInit();
         this.props.clearErrors();
     }
 
-
     render() {
+        const state = this.state;
+        const { classes } = this.props;
+        //const classes = useStyles();
         return (
-            <div className="container">
-                <form className="white" onSubmit={this.handleSubmit}>
-                    <h5 className="grey-text text-darken-3">Register</h5>
-                    {this.state.msg ?
-                        <div className="card-panel pink lighten-3">
-                            <span className="black-text">{this.state.msg}</span>
-                        </div>
-                        : null}
-                    <div className="input-field">
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="surname">Surname</label>
-                        <input type="text" id="surname" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="date_of_birth">Date of birth YYYY-MM-DD</label>
-                        <input type="text" id="date_of_birth" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field col s12">
-                        <select htmlFor="gender" id="gender" name={this.state.gender} value={this.state.gender} onChange={this.handleChange}>
-                            <option disabled value="">Choose option</option>
-                            <option value="F">Female</option>
-                            <option value="M">Male</option>
-                        </select>
-                        <label htmlFor="gender">Gender</label>
-
-                        {/* <label for="gender">Gender
-                        <select value={this.state.gender} onChange={this.handleChange}>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                            </select>
-                        </label> */}
-                    </div>
-                    <br />
-                    <br />
-
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Register</button>
-                    </div>
-                </form>
-            </div>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Register
+                        </Typography>
+                    <form
+                        className={classes.form}
+                        onSubmit={this.handleSubmit}
+                        noValidate>
+                        <TextField
+                            id="outlined-basic"
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="cnp"
+                            label="CNP"
+                            name="cnp"
+                            autoComplete="cnp"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="first_name"
+                            label="First Name"
+                            name="first_name"
+                            autoComplete="first_name"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="last_name"
+                            label="Last Name"
+                            name="last_name"
+                            autoComplete="last_name"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="graduation_year"
+                            label="Graduation Year"
+                            name="graduation_year"
+                            autoComplete="graduation_year"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onSubmit={this.handleSubmit}
+                        >
+                            Register
+                        </Button>
+                        {/* <form
+                        className={classes.form}
+                        onSubmit={this.handleSubmit}
+                    > 
+                    <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="cnp">
+                                CNP
+                                </InputLabel>
+                            <Input
+                                id="cnp"
+                                name="cnp"
+                                autoComplete="cnp"
+                                autoFocus
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </FormControl> 
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="first_name">
+                                First Name
+                                </InputLabel>
+                            <Input
+                                id="first_name"
+                                name="first_name"
+                                autoComplete="first_name"
+                                autoFocus
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="last_name">
+                                Last Name
+                                </InputLabel>
+                            <Input
+                                id="last_name"
+                                name="last_name"
+                                autoComplete="last_name"
+                                autoFocus
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="graduation_year">
+                                Graduation Year
+                                </InputLabel>
+                            <Input
+                                id="graduation_year"
+                                name="graduation_year"
+                                autoComplete="graduation_year"
+                                autoFocus
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </FormControl>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onSubmit={this.handleSubmit}
+                        >
+                            Register
+                            </Button>*/}
+                    </form>
+                </div>
+            </Container>
         )
     }
 }
@@ -140,4 +272,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { register, clearErrors })(SignUp);
+export default connect(mapStateToProps, { register, clearErrors })(withStyles(useStyles)(SignUp));

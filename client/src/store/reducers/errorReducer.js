@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
             return {
                 msg: {},
                 status: null,
-                is: null
+                id: null
             }
         default:
             return state;
