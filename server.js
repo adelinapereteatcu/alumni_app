@@ -23,6 +23,10 @@ var login = require("./routes/login");
 app.use("/", login);
 var upload = require("./routes/upload");
 app.use("/", upload);
+var getUsers = require("./routes/getUsers");
+app.use("/", getUsers);
+var getAlumni = require("./routes/getAlumni");
+app.use("/", getAlumni);
 
 app.listen(9000);
 console.log('Server started on port 9000');

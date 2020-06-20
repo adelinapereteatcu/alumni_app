@@ -10,24 +10,26 @@ const config = require('config');
 const auth = require('../middleware/auth');
 
 route.post('/login', function (req, res) {
-    var email = req.body.email;
+    var user_email = req.body.user_email;
     var password = req.body.password;
 
-    console.log(email);
+    console.log(user_email);
     console.log(password);
 
     const key = config.get('jwtSecret');
 
     //simple validation
-    if (!email || !password) {
+    if (!user_email || !password) {
         return res.status(400).json({ msg: "Please enter all fields" });
     }
 
     session
-        .run("MATCH (n:Student {email:{emailParam}}) RETURN n",
-            { emailParam: email })
+        .run("MATCH (u:User {user_email:{emailParam}}) RETURN u",
+            { emailParam: user_email })
         .then(function (result) {
             if (_.isEmpty(result.records)) {
+                console.log(result.records);
+                console.log("User doesn't exist")
                 return res.status(400).json({msg:'user does not exist'});
             }
             result.records.forEach(function (record) {
@@ -35,7 +37,6 @@ route.post('/login', function (req, res) {
                     bcrypt.compare(password, record._fields[0].properties.password)
                         .then(isMatch => {
                             if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
-
                             jwt.sign(
                                 { id: record._fields[0].identity.low },
                                 config.get('jwtSecret'),
@@ -69,28 +70,28 @@ route.post('/login', function (req, res) {
         });
 });
 
-//get user data from token thanks to the id
-route.get('/login/user', auth, function (req, res) {
-    const id = req.user.id;
-    session
-        .run("MATCH (n:Student) WHERE id(n)=toInt({idParam}) RETURN n", { idParam: id })
-        .then(function (result) {
-            var studentsArr = [];
-            result.records.forEach(function (record) {
-                studentsArr.push({
-                    id: record._fields[0].identity.low,
-                    name: record._fields[0].properties.name,
-                    surname: record._fields[0].properties.surname,
-                    date_of_birth: record._fields[0].properties.date_of_birth,
-                    email: record._fields[0].properties.email,
-                    gender: record._fields[0].properties.gender, 
-                })
-                //console.log(record._fields[0]);
-            });
-            res.status(200).json({
-                studentsArr
-            });
-        })
-});
+// //get user data from token thanks to the id
+// route.get('/login/user', auth, function (req, res) {
+//     const id = req.user.id;
+//     session
+//         .run("MATCH (n:Student) WHERE id(n)=toInt({idParam}) RETURN n", { idParam: id })
+//         .then(function (result) {
+//             var studentsArr = [];
+//             result.records.forEach(function (record) {
+//                 studentsArr.push({
+//                     id: record._fields[0].identity.low,
+//                     name: record._fields[0].properties.name,
+//                     surname: record._fields[0].properties.surname,
+//                     date_of_birth: record._fields[0].properties.date_of_birth,
+//                     email: record._fields[0].properties.email,
+//                     gender: record._fields[0].properties.gender, 
+//                 })
+//                 //console.log(record._fields[0]);
+//             });
+//             res.status(200).json({
+//                 studentsArr
+//             });
+//         })
+// });
 
 module.exports = route;

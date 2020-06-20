@@ -1,41 +1,61 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
+import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Logout from './components/auth/Logout';
-import { createStore } from 'redux';
-import store from './store';
-import { Provider } from 'react-redux';
-import { loadUser } from './store/actions/authActions';
+
 import Dashboard from './components/dashboard/Dashboard';
 import Homepage from './components/homepage/Homepage';
-import Upload from './components/upload/Upload';
+import { connect } from 'react-redux';
 
 class App extends Component {
 
-  componentDidMount() {
-    store.dispatch(loadUser());
-  }
+  // componentDidMount() {
+  //   store.dispatch(loadUser());
+  // }
 
   render() {
+    //routes for unauthenticated users
+    let routes = (
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Redirect to="/"/>
+      </Switch>
+    )
+
+      //if (this.props.isAuthenticated){
+        routes = (
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/login" component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+          </Switch>
+        );
+     // }
+
     return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Homepage} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/upload" component={Upload} />
-              <Route exact path="/dashboard" component={Dashboard} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </Provider>
+
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route path="/dashboard" component={Dashboard} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { ExcelRenderer, OutTable } from 'react-excel-renderer';
-import { Input, InputGroup, Card } from 'reactstrap';
+import { InputGroup, Card } from 'reactstrap';
 import './Upload.css';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -124,70 +124,72 @@ class Upload extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Container component="main" maxWidth="xl">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h5">
-                        Choose the file to upload:
+            <React.Fragment >
+                <Container component="main" maxWidth="xl">
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Typography component="h1" variant="h5">
+                            Choose the file to upload:
                     </Typography>
-                    <form
-                        className={classes.form}
-                    >
-                        <InputGroup>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={this.openFileBrowser.bind(this)}>
-                                Browse file&hellip;
+                        <form
+                            className={classes.form}
+                        >
+                            <InputGroup>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    onClick={this.openFileBrowser.bind(this)}>
+                                    Browse file&hellip;
                              </Button>
-                            <input
-                                type="file"
-                                className="inputfile"
-                                onChange={this.fileHandler.bind(this)}
-                                ref={this.fileInput}
-                                onClick={(event) => { event.target.value = null }} style={{ "padding": "10px" }} />
-                            <br></br>
-                            <TextField
-                                type="text"
-                                id="outlined-basic"
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                
-                                value={this.state.uploadedFileName}
-                                readOnly
-                                invalid={this.state.isFormInvalid} />
-                            {/* <FormFeedback>
+                                <input
+                                    type="file"
+                                    className="inputfile"
+                                    onChange={this.fileHandler.bind(this)}
+                                    ref={this.fileInput}
+                                    onClick={(event) => { event.target.value = null }} style={{ "padding": "10px" }} />
+                                <br></br>
+                                <TextField
+                                    type="text"
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+
+                                    value={this.state.uploadedFileName}
+                                    readOnly
+                                    invalid={this.state.isFormInvalid} />
+                                {/* <FormFeedback>
                                 <Fade in={this.state.isFormInvalid} tag="h6" style={{ fontStyle: "italic" }}>
                                     Please select a .xlsx file only !
                                     </Fade>
                             </FormFeedback> */}
-                        </InputGroup>
-                   
-                    {this.state.dataLoaded &&
-                        <div>
-                            <Card body outline color="secondary" className="restrict-card">
-                                <OutTable data={this.state.rows} columns={this.state.cols} tableClassName="ExcelTable2007" tableHeaderRowClass="heading" />
-                            </Card>
-                        </div>}
-                    <Button 
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        startIcon={<CloudUploadIcon />}
-                        onClick={this.onClickHandler}
-                        >
-                            Upload
-                        </Button> 
+                            </InputGroup>
+
+                            {this.state.dataLoaded &&
+                                <div>
+                                    <Card body outline color="secondary" className="restrict-card">
+                                        <OutTable data={this.state.rows} columns={this.state.cols} tableClassName="ExcelTable2007" tableHeaderRowClass="heading" />
+                                    </Card>
+                                </div>}
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<CloudUploadIcon />}
+                                onClick={this.onClickHandler}
+                            >
+                                Upload
+                        </Button>
                         </form>
-                    {!this.state.error_code ?
-                        <div>
-                            <Alert severity="success">File uploaded successfully!</Alert>
-                        </div>
-                        : null}
-                </div>
-            </Container>
+                        {!this.state.error_code ?
+                            <div>
+                                <Alert severity="success">File uploaded successfully!</Alert>
+                            </div>
+                            : null}
+                    </div>
+                </Container>
+            </React.Fragment>
         );
     }
 

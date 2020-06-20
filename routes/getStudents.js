@@ -35,9 +35,6 @@ route.get('/', auth, (req, res) => {
                 .catch(function (error) {
                     console.log(error);
                 })
-    //     }
-    // })
-
 })
 
 function verifyToken(req, res, next) {

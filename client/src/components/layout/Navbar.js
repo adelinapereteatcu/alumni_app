@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -40,8 +41,8 @@ class Navbar extends Component {
     }
 
     render() {
-        const { isAuthenticated, user } = this.props.auth; //contains initialState from authReducer
-        let currentUser = '';
+        //const { isAuthenticated, user } = this.props.auth; //contains initialState from authReducer
+        // let currentUser = '';
         //user ? currentUser = Object.values(user)[0][0].name : ''; 
         // if (user !== null) {
         //     currentUser = Object.values(user)[0][0].name;
@@ -57,16 +58,34 @@ class Navbar extends Component {
                 <AppBar position="static">
                     <Toolbar>
                         <Box flexGrow={1}>
-                        <Typography variant="h5">
-                            <Link href="/" color="inherit" className="margin">
-                                Alumni App
+                            <Typography variant="h5">
+                                <Link href="/" color="inherit" className="margin">
+                                    Alumni App
                             </Link>
-                        </Typography>
+                            </Typography>
                         </Box>
-                        <Button variant="contained" color="primary" href="/register" >
+                        <Button
+                            exact
+                            component={NavLink}
+                            variant="contained"
+                            color="primary"
+                            to="/register"
+                            activeStyle={{
+                                textDecoration: 'underline'
+                            }}
+                        >
                             Register
                         </Button>
-                        <Button variant="contained" color="primary" href="/login" >
+                        <Button
+                            exact
+                            component={NavLink}
+                            variant="contained"
+                            color="primary"
+                            to="/login"
+                            activeStyle={{
+                                textDecoration: 'underline'
+                            }}
+                        >
                             Log in
                         </Button>
                     </Toolbar>

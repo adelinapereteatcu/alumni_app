@@ -4,10 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import uniImage from '../../media/University.jpg';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Navbar from '../layout/Navbar';
 
 const useStyles = theme => ({
     mainFeaturedPost: {
@@ -45,6 +45,7 @@ class Homepage extends Component {
         const { classes } = this.props;
         return (
             <React.Fragment>
+                <Navbar />
                 <br></br>
                 <CssBaseline />
                 <Container maxWidth="md">

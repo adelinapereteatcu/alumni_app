@@ -2,40 +2,40 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import InfoIcon from '@material-ui/icons/Info';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from "react-router-dom";
 
 export const mainListItems = (
     <div>
-        <ListItem button>
+        <ListItem button component={Link} to="/dashboard/alumni">
             <ListItemIcon>
-                <DashboardIcon />
+                <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Alumni" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/dashboard/myprofile">
             <ListItemIcon>
                 <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary="My profile" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/dashboard/events">
             <ListItemIcon>
                 <EventAvailableIcon />
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
-        <ListItem button>
+        <ListItem button to="/dashboard/search">
             <ListItemIcon>
                 <SearchIcon />
             </ListItemIcon>
             <ListItemText primary="Search" />
         </ListItem>
-        <ListItem button>
+        <ListItem button to="/dashboard/statistics">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>

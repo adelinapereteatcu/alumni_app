@@ -9,10 +9,18 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import { mainListItems, secondaryListItems } from './listItems';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Route, Switch } from "react-router-dom";
+import AlignItemsList from './AlignItemsList';
+import SomeComponent from './Component';
+import Button from '@material-ui/core/Button';
+import { NavLink } from 'react-router-dom';
+import { logout } from '../../store/actions/authActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Upload from '../upload/Upload';
 
 const drawerWidth = 240;
 
@@ -96,28 +104,28 @@ const useStyles = theme => ({
 });
 
 class Dashboard extends Component {
+  state = {
+    open: true
+  }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true
-    }
+  static propTypes = {
+    logout: PropTypes.func.isRequired
   }
 
   handleDrawerOpen = () => {
-    this.setState = {
-      open: true
-    }
+    this.setState({ open: true });
+    //console.log("Handle Drawer Open: " + this.state.open);
   };
+
   handleDrawerClose = () => {
-    this.setState = {
-      open: false
-    }
+    this.setState({ open: false });
+    //console.log("Handle Drawer Close: " + this.state.open);
   };
+
 
   render() {
     const { classes } = this.props;
-   
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -134,8 +142,39 @@ class Dashboard extends Component {
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Dashboard
-          </Typography>
-            
+            </Typography>
+            <Button
+              exact
+              component={NavLink}
+              variant="contained"
+              color="primary"
+              to="/"
+              onClick={this.props.logout}
+            >
+              Log out
+            </Button>
+            {this.props.user !== null ?
+
+              this.props.user.properties.user_email === "admin@gmail.com" ?
+                <Button
+                  exact
+                  component={NavLink}
+                  variant="contained"
+                  color="primary"
+                  to="/dashboard/upload"
+                  //onClick={this.props.logout}
+                >
+                  Upload
+            </Button>
+                : null :null 
+            }
+
+
+            {/* <IconButton color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Drawer
@@ -146,7 +185,9 @@ class Dashboard extends Component {
           open={this.state.open}
         >
           <div className={classes.toolbarIcon}>
-           
+            <IconButton onClick={this.handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
           </div>
           <Divider />
           <List>{mainListItems}</List>
@@ -155,15 +196,33 @@ class Dashboard extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-             
-            </Grid>
-          </Container>
+        <Switch>
+            <Route
+              exact
+              path="/dashboard/alumni"
+              component={AlignItemsList}
+            />
+            <Route
+              exact
+              path="/dashboard/myprofile"
+              component={SomeComponent}
+            />
+            <Route
+              exact
+              path="/dashboard/upload"
+              component={Upload}
+            />
+        </Switch>
         </main>
       </div>
     );
   }
 }
 
-export default (withStyles(useStyles)(Dashboard));
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  }
+}
+
+export default connect(mapStateToProps, { logout })(withStyles(useStyles)(Dashboard));
