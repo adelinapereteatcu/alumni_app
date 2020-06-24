@@ -82,9 +82,9 @@ class LogIn extends Component {
         console.log(this.props.state);
         console.log("LOGIN " + this.props.isAuthenticated);
         console.log(this.state.msg);
-        if (this.props.isAuthenticated) {
-            this.props.history.push("/");
-        }
+        // if (this.props.isAuthenticated) {
+        //     this.props.history.push("/");
+        // }
     }
 
     componentDidMount() {
@@ -96,7 +96,7 @@ class LogIn extends Component {
         const { classes } = this.props;
         return (
             <React.Fragment >
-                {this.props.isAuthenticated ? this.props.history.push("/dashboard") : null}
+                {this.props.isAuthenticated ? this.props.history.push("/dashboard/alumni") : null}
                 <Navbar />
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -125,9 +125,10 @@ class LogIn extends Component {
                                 onChange={this.handleChange}
                             />
                             <TextField
-                                id="outlined-basic"
+                                id="outlined-password-input"
                                 variant="outlined"
                                 margin="normal"
+                                type="password"
                                 required
                                 fullWidth
                                 id="password"

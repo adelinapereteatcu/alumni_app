@@ -26,7 +26,7 @@ route.get('/getUsers', auth, (req, res) => {
                     graduation_year: record._fields[0].properties.graduation_year,
                     bachelor_thesis: record._fields[0].properties.bachelor_thesis
                 })
-                console.log(record._fields[0]);
+                //console.log(record._fields[0]);
             });
             res.status(200).json({
                 users

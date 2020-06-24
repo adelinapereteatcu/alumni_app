@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { getAlumni } from '../../store/actions/alumniActions';
 import { getUsers } from '../../store/actions/usersAction';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 const useStyles = theme => ({
     root: {
@@ -49,9 +50,6 @@ class AlignItemsList extends Component {
         const { classes } = this.props;
         const { alumni } = this.props.alumni;
         const { users } = this.props.users;
-        // const alumniArray = this.props.alumni.map((a) =>
-        //     <li key={a.first_name}>{a.last_name}</li>
-        // );
         return (
             <React.Fragment>
                 <Container maxWidth="xl" className={classes.container}>
@@ -63,7 +61,11 @@ class AlignItemsList extends Component {
                             <List className={classes.root}>
                                 {users.map((a) => (
                                     <React.Fragment>
-                                        <ListItem key={a.id} alignItems="flex-start">
+                                        <ListItem 
+                                        component={Link}
+                                            to={`/dashboard/alumni/${a.id}`} 
+                                            key={a.id} 
+                                            alignItems="flex-start">
                                             <ListItemAvatar>
                                                 <Avatar />
                                                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /> */}

@@ -6,27 +6,24 @@ var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'admin '
 const session = driver.session();
 const auth = require('../middleware/auth');
 
-//register request route 
-route.get('/getAlumni', auth, function (req, res) {
+//get all events route 
+route.get('/getEvents', auth, function (req, res) {
     session
-        .run("MATCH (a:Alumni)"+
-        "WHERE NOT (a)-[:IS_REGISTERED]-(:User) return a")
+        .run("MATCH (e:Event)" +
+            "RETURN e")
         .then(function (result) {
-            var alumni = [];
+            var allEvents = [];
             result.records.forEach(function (record) {
-                alumni.push({
+                allEvents.push({
                     id: record._fields[0].identity.low,
-                    cnp: record._fields[0].properties.cnp,
-                    first_name: record._fields[0].properties.first_name,
-                    last_name: record._fields[0].properties.last_name,
-                    graduation_year: record._fields[0].properties.graduation_year,
-                    email: record._fields[0].properties.email,
-                    bachelor_thesis: record._fields[0].properties.bachelor_thesis
+                    event_name: record._fields[0].properties.event_name,
+                    location: record._fields[0].properties.location,
+                    timestamp: record._fields[0].properties.timestamp
                 })
                 //console.log(record._fields[0]);
             });
             res.json({
-                alumni
+                allEvents
             });
         })
         .catch(function (error) {

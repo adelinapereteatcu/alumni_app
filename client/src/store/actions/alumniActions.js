@@ -1,4 +1,4 @@
-import { GET_ALUMNI, ADD_ALUMNI, DELETE_ALUMNI, ALUMNI_LOADING } from "./types";
+import { GET_ALUMNI, ADD_ALUMNI, DELETE_ALUMNI, ALUMNI_LOADING, GET_ALUMNI_BY_YEAR } from "./types";
 import axios from 'axios';
 
 export const getAlumni = () => (dispatch, getState) => {
@@ -7,7 +7,19 @@ export const getAlumni = () => (dispatch, getState) => {
         //console.log(res.data);
         dispatch({
             type: GET_ALUMNI,
-            payload: res.data.alumni //geting the alumni array from json object from api
+            payload: res.data.alumni //getting the alumni array from json object from api
+        })
+    }
+    )
+}
+
+export const getAlumniByYear = () => (dispatch, getState) => {
+    dispatch(setAlumniLoading());
+    axios.get('/getAlumniByYear').then(res => {
+        console.log(res.data);
+        dispatch({
+            type: GET_ALUMNI_BY_YEAR,
+            payload: res.data.resultArr //getting the alumni array from json object from api
         })
     }
     )

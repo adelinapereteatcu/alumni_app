@@ -1,8 +1,9 @@
-import { GET_ALUMNI, ADD_ALUMNI, DELETE_ALUMNI, ALUMNI_LOADING } from "../actions/types";
+import { GET_ALUMNI, ADD_ALUMNI, DELETE_ALUMNI, ALUMNI_LOADING, GET_ALUMNI_BY_YEAR } from "../actions/types";
 
 const initialState = {
     alumni: [],
-    loading: false
+    loading: false,
+    resultArr:[]
 }
 
 export default function (state = initialState, action) {
@@ -11,6 +12,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 alumni: action.payload,
+                loading: false
+            }
+        case GET_ALUMNI_BY_YEAR:
+            return {
+                ...state,
+                resultArr: action.payload,
                 loading: false
             }
         case DELETE_ALUMNI:

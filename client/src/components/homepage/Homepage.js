@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -8,6 +14,8 @@ import uniImage from '../../media/University.jpg';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Navbar from '../layout/Navbar';
+import { connect } from 'react-redux';
+import { getAlumniByYear } from '../../store/actions/alumniActions';
 
 const useStyles = theme => ({
     mainFeaturedPost: {
@@ -38,11 +46,22 @@ const useStyles = theme => ({
             paddingRight: 0,
         },
     },
+    table: {
+        width: 500,
+        margin: 'auto'
+    },
 });
 
 class Homepage extends Component {
+   
+
+    componentDidMount() {
+        this.props.getAlumniByYear();
+    }
+
     render() {
         const { classes } = this.props;
+        console.log(this.props.alumni.resultArr);
         return (
             <React.Fragment>
                 <Navbar />
@@ -68,6 +87,28 @@ class Homepage extends Component {
                         </Paper>
                     </main>
                 </Container>
+                <Paper >
+                <TableContainer>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Class</TableCell>
+                                <TableCell align="right">Number of alumni</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.alumni.resultArr.map((row) => (
+                                <TableRow key={row.class}>
+                                    <TableCell component="th" scope="row">
+                                        {row.class}
+                                    </TableCell>
+                                    <TableCell align="right">{row.number}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                </Paper>
             </React.Fragment>
         );
     }
@@ -75,6 +116,18 @@ class Homepage extends Component {
 
 Homepage.propTypes = {
     post: PropTypes.object,
+    getAlumniByYear: PropTypes.func.isRequired,
+    alumni: PropTypes.object.isRequired,
 };
 
-export default (withStyles(useStyles)(Homepage));
+const mapStateToProps = state => ({
+    alumni: state.alumni //from root reducer
+})
+
+const mapDispatchtoProps = dispatch => {
+    return {
+        getAlumniByYear: () => dispatch(getAlumniByYear())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchtoProps)(withStyles(useStyles)(Homepage));

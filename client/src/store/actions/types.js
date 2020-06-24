@@ -17,10 +17,17 @@ export const GET_ALUMNI = "GET_ALUMNI";
 export const ADD_ALUMNI = "ADD_ALUMNI";
 export const DELETE_ALUMNI = "DELETE_ALUMNI";
 export const ALUMNI_LOADING = "ALUMNI_LOADING"
+export const GET_ALUMNI_BY_YEAR = "GET_ALUMNI_BY_YEAR"
 
 export const GET_USERS = "GET_USERS";
 export const ADD_USERS = "ADD_USERS";
 export const DELETE_USERS = "DELETE_USERS";
 export const USERS_LOADING = "USERS_LOADING"
+
+export const GET_EVENTS = "GET_EVENTS";
+export const ADD_EVENT = "ADD_EVENT";
+export const EVENTS_LOADING = "EVENTS_LOADING";
+
+
 
 

@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Navbar from '../layout/Navbar';
 import Alert from '@material-ui/lab/Alert';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = theme => ({
     paper: {
@@ -72,9 +73,6 @@ class SignUp extends Component {
                 this.setState({ msg: null });
             }
         }
-        console.log(this.state.msg);
-        // if (this.state.msg === null)
-        //     this.props.history.push("/login");
     }
 
     handleChange = (e) => {
@@ -99,14 +97,10 @@ class SignUp extends Component {
         }
         //attempt to register
         this.props.register(newUser);
-        this.props.clearErrors();
-        this.props.history.push("/login");
-        // console.log("Name : " + this.state.name);
-        // console.log("Surname : " + this.state.surname);
-        // console.log("Date of birth : " + this.state.date_of_birth);
-        // console.log("Email : " + this.state.email);
-        // console.log("Password : " + this.state.password);
-        // console.log("Gender : " + this.state.gender);    
+        console.log(this.props);
+        console.log(this.props.auth.register_succes);
+        // if (this.props.auth.isLoading === false)
+        //     this.props.history.push("/login");    
     }
 
     componentDidMount() {
@@ -128,11 +122,17 @@ class SignUp extends Component {
                         <Typography component="h1" variant="h5">
                             Register
                         </Typography>
-                        <br/>
-                        {this.state.msg ?
+                        <br />
+                        {this.props.error.id === 'REGISTER_FAIL' ?
                             <div className={classes.root}>
                                 <Alert severity="error">{this.state.msg}</Alert>
-                            </div> : null}
+                            </div> :
+                            null
+                        }
+                        {this.props.auth.register_success ?
+                            <Redirect to="login"/>
+                            :null    
+                    }
                         <form
                             className={classes.form}
                             onSubmit={this.handleSubmit}
@@ -199,9 +199,10 @@ class SignUp extends Component {
                                 onChange={this.handleChange}
                             />
                             <TextField
-                                id="outlined-basic"
+                                id="outlined-password-input"
                                 variant="outlined"
                                 margin="normal"
+                                type="password"
                                 required
                                 fullWidth
                                 id="password"
@@ -221,72 +222,6 @@ class SignUp extends Component {
                             >
                                 Register
                         </Button>
-                            {/* <form
-                        className={classes.form}
-                        onSubmit={this.handleSubmit}
-                    > 
-                    <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="cnp">
-                                CNP
-                                </InputLabel>
-                            <Input
-                                id="cnp"
-                                name="cnp"
-                                autoComplete="cnp"
-                                autoFocus
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </FormControl> 
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="first_name">
-                                First Name
-                                </InputLabel>
-                            <Input
-                                id="first_name"
-                                name="first_name"
-                                autoComplete="first_name"
-                                autoFocus
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="last_name">
-                                Last Name
-                                </InputLabel>
-                            <Input
-                                id="last_name"
-                                name="last_name"
-                                autoComplete="last_name"
-                                autoFocus
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="graduation_year">
-                                Graduation Year
-                                </InputLabel>
-                            <Input
-                                id="graduation_year"
-                                name="graduation_year"
-                                autoComplete="graduation_year"
-                                autoFocus
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </FormControl>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onSubmit={this.handleSubmit}
-                        >
-                            Register
-                            </Button>*/}
                         </form>
                     </div>
                 </Container>
@@ -296,7 +231,9 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-    error: state.error //getting this from rootReducer
+    error: state.error, //getting this from rootReducer
+    state: state,
+    auth: state.auth
 });
 
 

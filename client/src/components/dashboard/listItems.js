@@ -7,6 +7,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import SearchIcon from '@material-ui/icons/Search';
+import EditIcon from '@material-ui/icons/Edit';
 import { Link } from "react-router-dom";
 
 export const mainListItems = (
@@ -19,9 +20,9 @@ export const mainListItems = (
         </ListItem>
         <ListItem button component={Link} to="/dashboard/myprofile">
             <ListItemIcon>
-                <AccountCircleIcon />
+                <EditIcon />
             </ListItemIcon>
-            <ListItemText primary="My profile" />
+            <ListItemText primary="Edit profile" />
         </ListItem>
         <ListItem button component={Link} to="/dashboard/events">
             <ListItemIcon>
@@ -29,7 +30,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
-        <ListItem button to="/dashboard/search">
+        <ListItem button component={Link} to="/dashboard/search">
             <ListItemIcon>
                 <SearchIcon />
             </ListItemIcon>

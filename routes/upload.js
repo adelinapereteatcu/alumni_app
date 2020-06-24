@@ -34,9 +34,9 @@ var upload = multer({ //multer settings
 /** API path that will upload the files */
 app.post('/upload', function (req, res) {
     var exceltojson; //initialization
-
+    console.log("Inside post upload route");
     upload(req, res, function (err) {
-        console.log("Inside upload route");
+        console.log("Inside upload function");
         if (err) {
             console.log("Some error here");
             res.json({ error_code: 1, err_desc: err });
@@ -82,7 +82,7 @@ app.post('/upload', function (req, res) {
                     })
             });
         } catch (e) {
-            res.json({ error_code: 1, err_desc: "Corupted excel file" })
+            res.json({ error_code: 1, err_desc: "Corrupted excel file" })
         }
         //return res.status(200).send(req.file);
     });

@@ -14,13 +14,15 @@ import { mainListItems, secondaryListItems } from './listItems';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Route, Switch } from "react-router-dom";
 import AlignItemsList from './AlignItemsList';
-import SomeComponent from './Component';
+import EditProfile from './EditProfile';
 import Button from '@material-ui/core/Button';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../../store/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Upload from '../upload/Upload';
+import UserProfile from './UserProfile';
+import Search from './Search';
 
 const drawerWidth = 240;
 
@@ -83,11 +85,11 @@ const useStyles = theme => ({
     },
   },
   appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
+  // content: {
+  //   flexGrow: 1,
+  //   height: '100vh',
+  //   overflow: 'auto',
+  // },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -125,7 +127,6 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -154,7 +155,6 @@ class Dashboard extends Component {
               Log out
             </Button>
             {this.props.user !== null ?
-
               this.props.user.properties.user_email === "admin@gmail.com" ?
                 <Button
                   exact
@@ -162,19 +162,12 @@ class Dashboard extends Component {
                   variant="contained"
                   color="primary"
                   to="/dashboard/upload"
-                  //onClick={this.props.logout}
+                //onClick={this.props.logout}
                 >
                   Upload
             </Button>
-                : null :null 
+                : null : null
             }
-
-
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Drawer
@@ -196,7 +189,7 @@ class Dashboard extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-        <Switch>
+          <Switch>
             <Route
               exact
               path="/dashboard/alumni"
@@ -205,14 +198,26 @@ class Dashboard extends Component {
             <Route
               exact
               path="/dashboard/myprofile"
-              component={SomeComponent}
+              component={EditProfile}
             />
             <Route
               exact
               path="/dashboard/upload"
               component={Upload}
             />
-        </Switch>
+            <Route
+              exact
+              path="/dashboard/search"
+              component={Search}
+            />
+            <Route
+              exact
+              path="/dashboard/alumni/:id"
+              render={renderProps => (
+                <UserProfile id={renderProps.match.params.id} />
+              )}
+            />
+          </Switch>
         </main>
       </div>
     );

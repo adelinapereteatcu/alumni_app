@@ -70,7 +70,8 @@ class Upload extends Component {
         console.log(event.target.files[0]);
         this.setState({
             selectedFile: event.target.files[0],
-            loaded: 0
+            loaded: 0,
+            error_code: 1
         })
 
         if (event.target.files.length) {
@@ -116,7 +117,8 @@ class Upload extends Component {
                 console.log(res.statusText);
                 console.log(res.data.error_code);
                 this.setState({
-                    error_code: res.data.error_code
+                    error_code: res.data.error_code,
+                    dataLoaded: false
                 });
             })
     }

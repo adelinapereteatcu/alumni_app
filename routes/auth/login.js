@@ -7,7 +7,7 @@ const session = driver.session();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const auth = require('../middleware/auth');
+const auth = require('../../middleware/auth');
 
 route.post('/login', function (req, res) {
     var user_email = req.body.user_email;
