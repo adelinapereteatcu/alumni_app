@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { mainListItems, secondaryListItems } from './listItems';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Route, Switch } from "react-router-dom";
-import AlignItemsList from './AlignItemsList';
+import AlumniList from './AlumniList';
 import EditProfile from './EditProfile';
 import Button from '@material-ui/core/Button';
 import { NavLink } from 'react-router-dom';
@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import Upload from '../upload/Upload';
 import UserProfile from './UserProfile';
 import Search from './Search';
+import Events from './Events';
 
 const drawerWidth = 240;
 
@@ -85,11 +86,11 @@ const useStyles = theme => ({
     },
   },
   appBarSpacer: theme.mixins.toolbar,
-  // content: {
-  //   flexGrow: 1,
-  //   height: '100vh',
-  //   overflow: 'auto',
-  // },
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+  },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -193,7 +194,7 @@ class Dashboard extends Component {
             <Route
               exact
               path="/dashboard/alumni"
-              component={AlignItemsList}
+              component={AlumniList}
             />
             <Route
               exact
@@ -209,6 +210,11 @@ class Dashboard extends Component {
               exact
               path="/dashboard/search"
               component={Search}
+            />
+            <Route
+              exact
+              path="/dashboard/events"
+              component={Events}
             />
             <Route
               exact

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getAlumni = () => (dispatch, getState) => {
     dispatch(setAlumniLoading());
-    axios.get('/getAlumni', tokenConfig(getState)).then(res => {
+    axios.get('/alumni', tokenConfig(getState)).then(res => {
         //console.log(res.data);
         dispatch({
             type: GET_ALUMNI,
@@ -15,7 +15,7 @@ export const getAlumni = () => (dispatch, getState) => {
 
 export const getAlumniByYear = () => (dispatch, getState) => {
     dispatch(setAlumniLoading());
-    axios.get('/getAlumniByYear').then(res => {
+    axios.get('/alumniByYear').then(res => {
         console.log(res.data);
         dispatch({
             type: GET_ALUMNI_BY_YEAR,

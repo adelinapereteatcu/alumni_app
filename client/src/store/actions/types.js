@@ -26,7 +26,9 @@ export const USERS_LOADING = "USERS_LOADING"
 
 export const GET_EVENTS = "GET_EVENTS";
 export const ADD_EVENT = "ADD_EVENT";
+export const EVENTS_ERROR = "EVENTS_ERROR";
 export const EVENTS_LOADING = "EVENTS_LOADING";
+export const LOADING_ADDING_EVENT = "LOADING_ADDING_EVENT"
 
 
 

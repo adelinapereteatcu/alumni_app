@@ -2,12 +2,13 @@ var express = require('express');
 var route = express.Router();
 var neo4j = require('neo4j-driver');
 var _ = require('lodash');
-var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'admin '));
+var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic(process.env.NEO4J_USERNAME, process.env.NEO4J_PASSWORD));
+require("dotenv").config();
 const session = driver.session();
 const auth = require('../middleware/auth');
 
 //register request route 
-route.get('/getAlumni', auth, function (req, res) {
+route.get('/alumni', auth, function (req, res) {
     session
         .run("MATCH (a:Alumni)"+
         "WHERE NOT (a)-[:IS_REGISTERED]-(:User) return a")

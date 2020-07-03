@@ -157,7 +157,6 @@ class Upload extends Component {
                                     variant="outlined"
                                     margin="normal"
                                     required
-
                                     value={this.state.uploadedFileName}
                                     readOnly
                                     invalid={this.state.isFormInvalid} />

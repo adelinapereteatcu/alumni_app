@@ -36,7 +36,7 @@ const useStyles = theme => ({
     }
 });
 
-class AlignItemsList extends Component {
+class AlumniList extends Component {
 
     //the place usually for making API requests
     componentDidMount() {
@@ -139,7 +139,7 @@ class AlignItemsList extends Component {
     }
 }
 
-AlignItemsList.propTypes = {
+AlumniList.propTypes = {
     getAlumni: PropTypes.func.isRequired,
     alumni: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired,
@@ -158,4 +158,4 @@ const mapDispatchtoProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withStyles(useStyles)(AlignItemsList));
+export default connect(mapStateToProps, mapDispatchtoProps)(withStyles(useStyles)(AlumniList));

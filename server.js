@@ -13,10 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 
-var home = require("./routes/getStudents");
-app.use("/", home);
-var add = require("./routes/addStudent");
-app.use("/", add);
 var register = require("./routes/auth/register");
 app.use("/", register);
 var login = require("./routes/auth/login");

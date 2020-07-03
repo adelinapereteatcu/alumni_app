@@ -5,3 +5,5 @@
 
 # Ignore all excel files
 *.xlsx
+
+.env

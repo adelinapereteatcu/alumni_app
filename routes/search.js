@@ -2,11 +2,11 @@ var express = require('express');
 var route = express.Router();
 var neo4j = require('neo4j-driver');
 var _ = require('lodash');
-var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'admin '));
+var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic(process.env.NEO4J_USERNAME, process.env.NEO4J_PASSWORD));
+require("dotenv").config();
 const session = driver.session();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
 
 route.post('/search', function (req, res) {

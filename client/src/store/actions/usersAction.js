@@ -3,21 +3,14 @@ import axios from 'axios';
 
 export const getUsers = () => (dispatch, getState) => {
     dispatch(setUsersLoading());
-    axios.get('/getUsers', tokenConfig(getState)).then(res => {
-        //console.log("GET USERS"+res.data);
+    axios.get('/users', tokenConfig(getState)).then(res => {
         dispatch({
             type: GET_USERS,
-            payload: res.data.users //geting the alumni array from json object from api
+            payload: res.data.users //geting the users array from json object from api
         })
     }
     )
 }
-// export const getAlumni = () => {
-//     return {
-//         type: GET_ALUMNI,
-
-//     }
-// }
 
 export const deleteUsers = (id) => {
     return {

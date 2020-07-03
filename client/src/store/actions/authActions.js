@@ -78,8 +78,12 @@ export const login = ({ user_email, password }) => dispatch => {
     axios.post('/login', body, config)
         .then((res) => {
             console.log(res);
-            dispatch({type: LOGIN_SUCCESS,
-            payload: res.data})
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            })
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));

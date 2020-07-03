@@ -3,7 +3,8 @@ var route = express.Router();
 var bodyParser = require('body-parser');
 var neo4j = require('neo4j-driver');
 var _ = require('lodash');
-var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic('neo4j', 'admin '));
+var driver = neo4j.driver('bolt://localhost', neo4j.auth.basic(process.env.NEO4J_USERNAME, process.env.NEO4J_PASSWORD));
+require("dotenv").config();
 const session = driver.session();
 var multer = require('multer');
 var xlstojson = require('xls-to-json-lc');
@@ -11,7 +12,8 @@ var xlsxtojson = require('xlsx-to-json-lc');
 var app = express();
 app.use(bodyParser.json()); 
 
-var storage = multer.diskStorage({ //multers disk storage settings
+var storage = multer.diskStorage({ 
+    //multers disk storage settings
     destination: function (req, file, cb) {
         cb(null, './uploads/')
     },
@@ -57,6 +59,7 @@ app.post('/upload', function (req, res) {
             exceltojson = xlstojson;
         }
         try {
+            console.log("Inside try block");
             exceltojson({
                 input: req.file.path, //the same path where we uploaded our file
                 output: "output.json", //output.json
@@ -71,14 +74,15 @@ app.post('/upload', function (req, res) {
                     .run("call apoc.load.json({file}) YIELD value " +
                         "MERGE (a:Alumni {cnp:value.cnp}) ON CREATE " +
                         "SET a.first_name=value.first_name, a.last_name=value.last_name,"+
-                        "a.email=value.email, a.graduation_year=value.graduation_year, a.bachelor_thesis=value.bachelor_thesis "
-                        , { file: "file:/E:/Neo4j/Alumni%20App/output.json" })
+                        "a.email=value.email, a.graduation_year=value.graduation_year, "+
+                        "a.bachelor_thesis=value.bachelor_thesis ",
+                        { file: "file:/E:/Neo4j/Alumni%20App/output.json" })
+                        
                     .then(function (res) {
-                        console.log("THE RESPONSE");
                         console.log(res);
                     })
                     .catch(function (error) {
-                        console.log("THE ERROR"+error);
+                        console.log("ERROR "+error);
                     })
             });
         } catch (e) {

@@ -28,7 +28,7 @@ const useStyles = theme => ({
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         width: "100%",
-        height: "500px"
+        height: "400px"
     },
     overlay: {
         position: 'absolute',
@@ -49,6 +49,18 @@ const useStyles = theme => ({
     table: {
         width: 500,
         margin: 'auto'
+    },
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+        
+    },
+    container: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        width: 600,
     },
 });
 
@@ -79,7 +91,7 @@ class Homepage extends Component {
                                             Welcome to alumni app
                                         </Typography>
                                         <Typography variant="h5" color="inherit" paragraph>
-                                            description
+                                            
                                         </Typography>
                                     </div>
                                 </Grid>
@@ -87,13 +99,14 @@ class Homepage extends Component {
                         </Paper>
                     </main>
                 </Container>
-                <Paper >
-                <TableContainer>
+                <Container maxWidth="xl" className={classes.container}>
+                <Paper className={classes.paper}>
+                <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Class</TableCell>
-                                <TableCell align="right">Number of alumni</TableCell>
+                                <TableCell><b>Class</b></TableCell>
+                                        <TableCell align="right"><b>Number of alumni</b></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -109,6 +122,7 @@ class Homepage extends Component {
                     </Table>
                 </TableContainer>
                 </Paper>
+                </Container>
             </React.Fragment>
         );
     }

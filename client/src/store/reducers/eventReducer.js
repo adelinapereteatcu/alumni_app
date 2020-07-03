@@ -1,8 +1,16 @@
-import { GET_EVENTS, ADD_EVENT } from "..actions/types";
+import { 
+    GET_EVENTS,
+    ADD_EVENT, 
+    EVENTS_LOADING, 
+    EVENTS_ERROR,
+    LOADING_ADDING_EVENT
+ } from "../actions/types";
 
 const initialState = {
     events: [],
-    loading: false
+    token: localStorage.getItem('token'),
+    loading: false,
+    eventAdded: false
 }
 
 
@@ -16,12 +24,24 @@ export default function (state = initialState, action) {
             }
         case ADD_EVENT:
             return {
-                ...state
+                ...state,
+                eventAdded: true
             }
         case EVENTS_LOADING:
             return {
                 ...state,
                 loading: true
+            }
+        case LOADING_ADDING_EVENT:
+            return {
+                ...state,
+                eventAdded: false
+            }
+        case EVENTS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                eventAdded: false
             }
         default:
             return state;
