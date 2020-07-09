@@ -17,7 +17,8 @@ route.post('/register', function (req, res) {
     var user_email = req.body.user_email;
     var password = req.body.password;
 
-    const salt = process.env.BCRYPT_SALT;
+    const salt = parseInt(process.env.BCRYPT_SALT);
+    console.log(salt);
 
     if (!first_name || !last_name || !graduation_year || !user_email || !password || !cnp) {
         return res.status(400).json({ msg: "Please complete all fields" });
