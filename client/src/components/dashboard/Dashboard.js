@@ -24,6 +24,7 @@ import Upload from '../upload/Upload';
 import UserProfile from './UserProfile';
 import Search from './Search';
 import Events from './Events';
+import Edit from './Edit';
 
 const drawerWidth = 240;
 
@@ -128,6 +129,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
+    console.log(this.props);
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -156,7 +158,7 @@ class Dashboard extends Component {
               Log out
             </Button>
             {this.props.user !== null ?
-              this.props.user.properties.user_email === "admin@gmail.com" ?
+              this.props.user.properties.user_email === process.env.REACT_APP_ADMIN_EMAIL ?
                 <Button
                   exact
                   component={NavLink}
@@ -215,6 +217,11 @@ class Dashboard extends Component {
               exact
               path="/dashboard/events"
               component={Events}
+            />
+            <Route
+              exact
+              path="/dashboard/myprofile/edit"
+              component={Edit}
             />
             <Route
               exact

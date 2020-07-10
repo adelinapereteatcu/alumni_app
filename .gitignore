@@ -1,7 +1,7 @@
 # dependencies
 /node_modules
 
-.output
+.json
 
 # Ignore all excel files
 *.xlsx

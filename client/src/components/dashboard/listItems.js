@@ -22,7 +22,7 @@ export const mainListItems = (
             <ListItemIcon>
                 <EditIcon />
             </ListItemIcon>
-            <ListItemText primary="Edit profile" />
+            <ListItemText primary="My profile" />
         </ListItem>
         <ListItem button component={Link} to="/dashboard/events">
             <ListItemIcon>

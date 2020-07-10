@@ -15,6 +15,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
+import { getDetails } from '../../store/actions/detailsAction';
 
 const useStyles = theme => ({
     paper: {
@@ -42,11 +44,20 @@ class UserProfile extends Component {
     constructor(props) {
         super(props);
     }
+    componentDidMount() {
+        const id = parseInt(this.props.id);
+        const myUser = _.find(this.props.users.users, { 'id': id });
+        console.log(myUser);
+        console.log(myUser.cnp);
+        this.props.getDetails(myUser.cnp);
+    }
     render() {
         const { classes } = this.props;
         const id = parseInt(this.props.id);
         const myUser = _.find(this.props.users.users, { 'id': id });
-        console.log(myUser);
+        console.log(this.props.details);
+        const currentJobDetails = this.props.details.currentJob;
+        const currentResidenceDetails = this.props.details.currentResidence;
         return (
             <React.Fragment>
                 <Grid container spacing={3}>
@@ -81,6 +92,39 @@ class UserProfile extends Component {
                                     <Typography gutterBottom variant="body1">
                                         Bachelor thesis: {myUser.bachelor_thesis}
                                     </Typography>
+
+                                    {currentJobDetails && currentJobDetails.length > 0 ?
+                                        <React.Fragment>
+                                            <Typography gutterBottom variant="body1">
+                                                Current job
+                                    </Typography>
+                                            <Typography gutterBottom variant="body2">
+                                                Position: {currentJobDetails[0].position}
+                                            </Typography>
+                                            <Typography gutterBottom variant="body2">
+                                                Company: {currentJobDetails[0].company}
+                                            </Typography>
+                                            <Divider />
+                                        </React.Fragment>
+                                        : null
+                                    }
+                                    {currentResidenceDetails && currentResidenceDetails.length > 0 ?
+                                        <React.Fragment>
+                                            <Typography gutterBottom variant="body1">
+                                                Current residency
+                                    </Typography>
+                                            <Typography gutterBottom variant="body2">
+                                                Country: {currentResidenceDetails[0].country}
+                                            </Typography>
+                                            <Typography gutterBottom variant="body2">
+                                                City: {currentResidenceDetails[0].city}
+                                            </Typography>
+
+                                        </React.Fragment>
+                                        : null
+                                    }
+
+
                                 </CardContent>
                         </Card>
                         </Paper>
@@ -93,7 +137,15 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-    users: state.users //from root reducer
+    auth: state.auth,
+    users: state.users, //from root reducer
+    details: state.details
 })
 
-export default connect(mapStateToProps, null)(withStyles(useStyles)(UserProfile));
+const mapDispatchtoProps = dispatch => {
+    return {
+        getDetails: (cnp) => dispatch(getDetails(cnp))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchtoProps)(withStyles(useStyles)(UserProfile));

@@ -31,6 +31,10 @@ var event = require("./routes/addEvent");
 app.use("/", event);
 var getEvents = require("./routes/getEvents");
 app.use("/", getEvents);
+var addDetails = require("./routes/addDetails");
+app.use("/", addDetails);
+var getDetails = require("./routes/getDetails");
+app.use("/", getDetails);
 
 app.listen(9000);
 console.log('Server started on port 9000');
