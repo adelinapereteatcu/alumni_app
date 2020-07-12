@@ -15,7 +15,7 @@ export const getUsers = () => (dispatch, getState) => {
 export const deleteUsers = (id) => {
     return {
         type: DELETE_USERS,
-        payload: id //or CNP?
+        payload: id 
     }
 }
 

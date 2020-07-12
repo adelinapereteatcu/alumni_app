@@ -11,6 +11,7 @@ var xlstojson = require('xls-to-json-lc');
 var xlsxtojson = require('xlsx-to-json-lc');
 var app = express();
 app.use(bodyParser.json()); 
+const auth = require('../middleware/auth');
 
 var storage = multer.diskStorage({ 
     //multers disk storage settings
@@ -34,7 +35,7 @@ var upload = multer({ //multer settings
 }).single('file');
 
 /** API path that will upload the files */
-app.post('/upload', function (req, res) {
+app.post('/upload', auth, function (req, res) {
     var exceltojson; //initialization
     console.log("Inside post upload route");
     upload(req, res, function (err) {
@@ -92,8 +93,5 @@ app.post('/upload', function (req, res) {
     });
 });
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + "/index.html");
-});
 
 module.exports = app;

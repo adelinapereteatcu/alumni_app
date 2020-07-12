@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
 //post event route 
-route.post('/event', function (req, res) {
+route.post('/event', auth, function (req, res) {
     var cnp = req.body.cnp;
     var event_name = req.body.event_name;
     var location = req.body.location;

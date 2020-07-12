@@ -8,7 +8,7 @@ const session = driver.session();
 const auth = require('../middleware/auth');
 
 //register request route 
-route.get('/getDetails/:cnp', (req, res) => {
+route.get('/details/:cnp', auth, (req, res) => {
     const cnp = req.params.cnp;
     session
         .run("MATCH (u:User {cnp:{cnp}})-"+

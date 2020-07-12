@@ -36,12 +36,6 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Search" />
         </ListItem>
-        <ListItem button to="/dashboard/statistics">
-            <ListItemIcon>
-                <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Statistics" />
-        </ListItem>
     </div>
 );
 

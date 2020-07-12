@@ -3,6 +3,7 @@ import { GET_ALUMNI, ADD_ALUMNI, DELETE_ALUMNI, ALUMNI_LOADING, GET_ALUMNI_BY_YE
 const initialState = {
     alumni: [],
     loading: false,
+    token: localStorage.getItem('token'),
     resultArr:[]
 }
 

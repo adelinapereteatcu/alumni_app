@@ -11,7 +11,8 @@ const initialState = {
     currentResidence: [],
     loading: false,
     detailsAdded: false,
-    detailsLoading: false
+    detailsLoading: false,
+    token: localStorage.getItem('token')
 }
 
 

@@ -2,6 +2,7 @@ import { GET_USERS, ADD_USERS, DELETE_USERS, USERS_LOADING } from "../actions/ty
 
 const initialState = {
     users: [],
+    token: localStorage.getItem('token'),
     loading: false
 }
 

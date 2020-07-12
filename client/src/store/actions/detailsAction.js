@@ -20,7 +20,7 @@ export const setLoadingDetails = () => {
 export const getDetails = (cnp) => (dispatch, getState) => {
     dispatch(setLoadingDetails());
     
-    axios.get('/getDetails/'+cnp).then(res => {
+    axios.get('/details/' + cnp, tokenConfig(getState)).then(res => {
         console.log(res.data);
         dispatch({
             type: GET_DETAILS,
@@ -46,7 +46,7 @@ export const addDetails = ({ cnp, current_position, company, country, city }) =>
     console.log("HERE IS THE BODY");
     console.log(body);
 
-    axios.post('/addDetails', body, config)
+    axios.post('/details', body, config)
         .then(res => {
             console.log("HERE IS res.data");
             console.log(res.data);
